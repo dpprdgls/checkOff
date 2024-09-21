@@ -1,23 +1,29 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../actions/authActions';
+// src/redux/reducers/authReducer.js
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-    loading: false,
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: {
     isAuthenticated: false,
-    token: null,
+    user: null,
     error: null,
-};
+  },
+  reducers: {
+    login(state, action) {
+      state.isAuthenticated = true;
+      state.user = action.payload;
+      state.error = null;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+      state.user = null;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+    },
+  },
+});
 
-const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case LOGIN_REQUEST:
-            return { ...state, loading: true };
-        case LOGIN_SUCCESS:
-            return { ...state, loading: false, isAuthenticated: true, token: action.payload, error: null };
-        case LOGIN_FAILURE:
-            return { ...state, loading: false, isAuthenticated: false, token: null, error: action.payload };
-        default: 
-            return state;
-    }
-};
-
-export default authReducer;
+// Export actions and reducer
+export const { login, logout, setError } = authSlice.actions;
+export default authSlice.reducer;
