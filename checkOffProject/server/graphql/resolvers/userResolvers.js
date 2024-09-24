@@ -18,11 +18,18 @@ const userResolvers = {
   },
   Mutation: {
     register: async (_, { username, email, password }) => {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            throw new Error("Email already exists");
+        }
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = new User({ username, email, password: hashedPassword });
       const savedUser = await newUser.save();
       const token = jwt.sign({ userId: savedUser.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
-      return { ...savedUser._doc, id: savedUser.id, token };
+      return { 
+        token,
+        user: savedUser
+       };
     },
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
