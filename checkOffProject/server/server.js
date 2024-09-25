@@ -7,9 +7,10 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const baseTypeDefs = require('./graphql/schema.js');
 const userTypeDefs = require('./graphql/typeDefs/userTypeDefs');
+const taskTypeDefs = require('./graphql/typeDefs/taskTypeDefs');
 
 const { mergeTypeDefs } = require('@graphql-tools/merge');
-const typeDefs = mergeTypeDefs([baseTypeDefs, userTypeDefs]);
+const typeDefs = mergeTypeDefs([baseTypeDefs, userTypeDefs, taskTypeDefs]);
 
 
 const resolvers = require('./graphql/resolvers');
@@ -52,11 +53,11 @@ const server = new ApolloServer({
     server.applyMiddleware({ app });
 
     //connect to mongoDB
-    mongoose.connect(process.env.MONGODB_URI, { useNewURLParser: true, useUnifiedTopology: true })
+    mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch((err) => console.log(err));
 
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4000;
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}${server.graphqlPath}`);
     });

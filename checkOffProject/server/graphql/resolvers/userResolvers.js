@@ -23,18 +23,20 @@ const userResolvers = {
             throw new Error("Email already exists");
         }
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ username, email, password: hashedPassword });
+      console.log('Hashed password:', hashedPassword);  // Debugging purposes
+      const newUser = new User({ username, email, password });
       const savedUser = await newUser.save();
+      console.log('User saved:', savedUser);  // Debugging purposes
       const token = jwt.sign({ userId: savedUser.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
       return { 
         token,
-        user: savedUser
+        user: { id: savedUser.id, username: savedUser.username, email: savedUser.email }
        };
     },
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user) throw new Error("Invalid credentials");
-      const isValid = await bcrypt.compare(password, user.password);  // Fixed typo
+      const isValid = await user.comparePassword(password);  // Fixed typo
       if (!isValid) throw new Error("Invalid credentials");
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '2h' });
       return { ...user._doc, id: user.id, token };

@@ -2,8 +2,8 @@ const { gql } = require('apollo-server-express');
 const userTypeDefs = require('./userTypeDefs');
 
 const typeDefs = gql`
-  ${userTypeDefs}
+  ${userTypeDefs},
+  ${taskTypeDefs}
   `;
 
   module.exports = typeDefs;
-  

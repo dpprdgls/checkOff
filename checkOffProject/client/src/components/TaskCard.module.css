@@ -1,0 +1,33 @@
+.taskCard {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .taskCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .taskCardTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .taskCardDetails {
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  .taskCardExpand {
+    display: none;
+    margin-top: 15px;
+  }
+  
+  .taskCardExpanded .taskCardExpand {
+    display: block;
+  }
