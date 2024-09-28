@@ -1,41 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
-import TaskCard from '../components/TaskCard';
-
-const GET_TASKS = gql`
-  query GetTasks {
-    tasks {
-      id
-      title
-      notes
-      itemsRequired
-      cost
-      category
-    }
-  }
-`;
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasks } from '../redux/';
 
 const Home = () => {
-  const { data, loading, error } = useQuery(GET_TASKS);
-  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+  const { tasks, loading, error } = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    if (data) {
-      setTasks(data.tasks);
-    }
-  }, [data]);
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching tasks</div>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
-      <h1>Your Projects</h1>
-      <div className="task-list">
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
-      </div>
+      <h1>Tasks</h1>
+      <ul>
+      {tasks.map((task) => (
+        <li key={task._id}>{task.title}</li>
+      ))}
+      </ul>
     </div>
   );
 };

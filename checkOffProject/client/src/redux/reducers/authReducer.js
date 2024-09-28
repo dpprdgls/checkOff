@@ -1,29 +1,37 @@
-// src/redux/reducers/authReducer.js
-import { createSlice } from '@reduxjs/toolkit';
-
-const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
+// authReducer.js
+import {
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGIN_FAILURE,
+    REGISTER_REQUEST,
+    REGISTER_SUCCESS,
+    REGISTER_FAILURE,
+  } from '../actions/userActions.js'; // Ensure the path is correct
+  
+  const initialState = {
     isAuthenticated: false,
-    user: null,
+    token: null,
     error: null,
-  },
-  reducers: {
-    login(state, action) {
-      state.isAuthenticated = true;
-      state.user = action.payload;
-      state.error = null;
-    },
-    logout(state) {
-      state.isAuthenticated = false;
-      state.user = null;
-    },
-    setError(state, action) {
-      state.error = action.payload;
-    },
-  },
-});
-
-// Export actions and reducer
-export const { login, logout, setError } = authSlice.actions;
-export default authSlice.reducer;
+    loading: false,
+  };
+  
+  const authReducer = (state = initialState, action) => {
+    switch (action.type) {
+      case LOGIN_REQUEST:
+        return { ...state, loading: true };
+      case LOGIN_SUCCESS:
+        return { ...state, loading: false, isAuthenticated: true, token: action.payload };
+      case LOGIN_FAILURE:
+        return { ...state, loading: false, error: action.payload };
+      case REGISTER_REQUEST:
+        return { ...state, loading: true };
+      case REGISTER_SUCCESS:
+        return { ...state, loading: false };
+      case REGISTER_FAILURE:
+        return { ...state, loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
+  
+  export default authReducer;

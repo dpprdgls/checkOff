@@ -1,66 +1,41 @@
 require('dotenv').config();
 console.log('MONGODB_URI:', process.env.MONGODB_URI);
 const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-const User = require('./models/User');
-const baseTypeDefs = require('./graphql/schema.js');
-const userTypeDefs = require('./graphql/typeDefs/userTypeDefs');
-const taskTypeDefs = require('./graphql/typeDefs/taskTypeDefs');
-
-const { mergeTypeDefs } = require('@graphql-tools/merge');
-const typeDefs = mergeTypeDefs([baseTypeDefs, userTypeDefs, taskTypeDefs]);
 
 
-const resolvers = require('./graphql/resolvers');
-const bodyParser = require('body-parser');
-
-
-
+const userRoutes = require('./routes/userRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const authRoutes= require('./routes/authRoutes');
 
 
 // const authRouter = require('./routes/auth');
 
 const app = express();
 
+app.use(bodyParser.json());
+
 
 
 //middleware to verify JWT token
-app.use((req, res, next) => { 
-    const token = req.headers.authorization;
-    if (token) {
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = decoded;
+app.use('/api/users', userRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/auth', authRoutes);
 
-        } catch (error) {
-            console.error('Token Verification Error', error);
-        }
-    }
-    next();
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.error('MongoDB connection error:', err));
+
+// Start server
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
-//apollo server setup
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: ({ req }) => ({ user: req.user}),
-});
-
-(async function startServer() {
-    await server.start();
-    server.applyMiddleware({ app });
-
-    //connect to mongoDB
-    mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((err) => console.log(err));
-
-    const PORT = process.env.PORT || 4000;
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}${server.graphqlPath}`);
-    });
-
-})();
 
