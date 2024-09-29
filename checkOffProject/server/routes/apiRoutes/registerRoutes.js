@@ -1,8 +1,7 @@
-
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Your user model
+const User = require('../../models/User'); // Your user model
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -37,3 +36,5 @@ router.post('/register', async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   });
+
+  module.exports = router;

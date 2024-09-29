@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../redux/actions/authActions'; // Assuming you have an authActions file
+import { registerUser } from '../redux/actions/authActions';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({ email: '', username: '', password: '' });
   
   const dispatch = useDispatch();
   
-  // Get loading, success, and error states from Redux
-  const { loading, error, success } = useSelector((state) => state.auth); // Assuming state.auth contains auth states
+  // Get loading, error, and success states from Redux
+  const { loading, error, success } = useSelector((state) => state.auth);
 
   const handleRegister = (e) => {
     e.preventDefault();
     
-    // Dispatch the register action
-    dispatch(registerUser(formData));
+    // Dispatch the register action (ensure it takes all fields)
+    dispatch(registerUser(formData.email, formData.username, formData.password));
   };
 
   return (

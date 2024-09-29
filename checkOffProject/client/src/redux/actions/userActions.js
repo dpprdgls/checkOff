@@ -1,3 +1,5 @@
+// userActions.js
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -44,7 +46,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 };
 
 // Register user
-export const registerUser = (email, password) => async (dispatch) => {
+export const registerUser = (email, username, password) => async (dispatch) => {
   dispatch(registerRequest());
 
   try {
@@ -53,10 +55,12 @@ export const registerUser = (email, password) => async (dispatch) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }), // Corrected to an object
+      body: JSON.stringify({ email, username, password }), // Corrected to an object
+      
     });
 
     if (!response.ok) {
+        console.log(response);
       const errorData = await response.json(); // Extract error message from server
       throw new Error(errorData.message || 'Registration failed');
     }

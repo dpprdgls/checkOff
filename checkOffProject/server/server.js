@@ -6,9 +6,10 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 
-const userRoutes = require('./routes/userRoutes');
-const taskRoutes = require('./routes/taskRoutes');
-const authRoutes= require('./routes/authRoutes');
+const userRoutes = require('./routes/api/userRoutes');
+const taskRoutes = require('./routes/api/taskRoutes');
+const authRoutes= require('./routes/api/authRoutes');
+const registerRoutes = require('./routes/api/registerRoutes');
 
 
 // const authRouter = require('./routes/auth');
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/register', registerRoutes);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
