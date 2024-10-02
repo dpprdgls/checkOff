@@ -6,6 +6,8 @@ export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+export const LOGOUT = 'LOGOUT';
+
 // Action creators for login
 export const loginRequest = () => ({ type: LOGIN_REQUEST });
 export const loginSuccess = (token) => ({ type: LOGIN_SUCCESS, payload: token });
@@ -68,4 +70,12 @@ export const registerUser = (email, username, password) => async (dispatch) => {
   } catch (error) {
     dispatch(registerFailure(error.message));
   }
+};
+
+export const logoutUser = () => {
+    return (dispatch) => {
+        localStorage.removeItem('token');
+
+        dispatch({ type: LOGOUT });
+    };
 };

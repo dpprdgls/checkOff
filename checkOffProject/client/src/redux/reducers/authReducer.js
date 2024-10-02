@@ -6,6 +6,7 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
+    LOGOUT,
   } from '../actions/userActions.js'; // Ensure the path is correct
   
   const initialState = {
@@ -29,6 +30,8 @@ import {
         return { ...state, loading: false };
       case REGISTER_FAILURE:
         return { ...state, loading: false, error: action.payload };
+      case LOGOUT:
+        return { ...state, loading: false, isAuthenticated: false, token: null, error: action.payload };
       default:
         return state;
     }
