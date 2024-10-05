@@ -11,13 +11,12 @@ const App = () => {
       <nav>
         <Link to="/login">Login</Link>
         <Link to="/register">Register</Link>
-        <Link to='/'>Home</Link>
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
-        
+        <Route path="/home" component={Home} />
         {/* Add more routes as needed */}
       </Routes>
     </Router>

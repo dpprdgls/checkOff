@@ -1,38 +1,27 @@
-require('dotenv').config();
-console.log('MONGODB_URI:', process.env.MONGODB_URI);
 const express = require('express');
-const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
-const connectDB = require('./config/connection');
-
-
-const userRoutes = require('./routes/apiRoutes/userRoutes');
-const taskRoutes = require('./routes/apiRoutes/taskRoutes');
-const authRoutes= require('./routes/apiRoutes/authRoutes');
-const registerRoutes = require('./routes/apiRoutes/registerRoutes');
-
-
-
-
+const path = require('path');
 const app = express();
-
-app.use(bodyParser.json());
-
-
-
-//middleware to verify JWT token
-app.use('/api/users', userRoutes);
-app.use('/api/tasks', taskRoutes);
-app.use('/api/auth', authRoutes);
-// app.use('/api/register', registerRoutes);
-
-
-connectDB();
-
-// Start server
 const PORT = process.env.PORT || 4000;
+
+// Middleware for parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Your API routes go here, for example:
+app.use('/api/auth', require('./routes/authRoutes'));
+// app.use('/api/tasks', require('./routes/taskRoutes')); // Add other routes
+
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+
+  // Handle all GET requests by serving React's index.html file
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  });
+}
+
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
-
-
