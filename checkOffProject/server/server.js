@@ -1,14 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+app.use(cors());
 
 // Middleware for parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Your API routes go here, for example:
-app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api', require('./routes/apiRoutes')); // Add authentication routes
 // app.use('/api/tasks', require('./routes/taskRoutes')); // Add other routes
 
 // Serve static files from the React app in production
