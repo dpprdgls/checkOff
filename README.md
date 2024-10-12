@@ -41,7 +41,7 @@
     
     *Instructions on how to run tests:*
     
-    NA
+    Not available at this time.
     
     ## License
     
