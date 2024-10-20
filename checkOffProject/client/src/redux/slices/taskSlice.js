@@ -1,33 +1,23 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasks } from './path/to/taskSlice'; // Adjust path to taskSlice
 
-export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async () => {
-    const response = await fetch('/api/tasks');
-    return response.json();
-});
+const TaskList = () => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks.tasks);
 
+  useEffect(() => {
+    const userId = localStorage.getItem('userId'); // Assuming user ID is stored after login
+    dispatch(fetchTasks(userId)); // Pass the user ID to fetch tasks
+  }, [dispatch]);
 
-const taskSlice = createSlice({
-    name: 'tasks',
-    initialState: {
-        tasks: [],
-        laoding: false,
-        error: null, 
-    },
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-        .addCase(fetchTasks.pending, (state) => {
-            state.loading = true;
-        })
-        .addCase(fetchTasks.fulfilled, (state, action) => {
-            state.loading = false;
-            state.tasks = action.payload;
-        })
-        .addCase(fetchTasks.rejected, (state, action) => {
-            state.loading = false;
-            state.error = action.error.message;
-        });
-    },
-});
+  return (
+    <div>
+      {tasks.map((task) => (
+        <TaskCard key={task._id} task={task} />
+      ))}
+    </div>
+  );
+};
 
-export default taskSlice.reducer;
+export default TaskList;

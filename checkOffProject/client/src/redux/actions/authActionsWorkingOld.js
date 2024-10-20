@@ -30,21 +30,15 @@ export const loginUser = (email, password) => async (dispatch) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Extract the error message from response
-      throw new Error(errorData.message || 'Login failed');
+      throw new Error('Login failed');
     }
 
     const data = await response.json();
     localStorage.setItem('token', data.token); // Store token locally
     dispatch(loginSuccess(data.token));
-    
-    // Delay the redirect to ensure Redux action completes first
-    setTimeout(() => {
-      window.location.assign(`http://localhost:4000/api/auth/login/${data.user.id}/tasks`);
-    }, 100);
+    window.location.assign('/'); // Redirect on success
   } catch (error) {
-    const errorMessage = error.response ? error.response.data.message : error.message;
-    dispatch(loginFailure(errorMessage));
+    dispatch(loginFailure(error.message));
   }
 };
 
@@ -62,19 +56,13 @@ export const registerUser = (email, username, password) => async (dispatch) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json(); // Extract the error message from response
-      throw new Error(errorData.message || 'Registration failed');
+      throw new Error('Registration failed');
     }
 
-    const data = await response.json(); // Handle token if needed (e.g., in response)
+    const data = await response.json(); // If needed, handle token here
     dispatch(registerSuccess());
-
-    // Redirect to login page after successful registration
-    setTimeout(() => {
-      window.location.assign('/login');
-    }, 100);
+    window.location.assign('/login'); // Redirect to login on success
   } catch (error) {
-    const errorMessage = error.response ? error.response.data.message : error.message;
-    dispatch(registerFailure(errorMessage));
+    dispatch(registerFailure(error.message));
   }
 };
