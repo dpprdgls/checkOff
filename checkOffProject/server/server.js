@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 4000;
+const connectDB = require('./config/connection');
 
 app.use(cors());
 
@@ -23,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
 }
-
+connectDB();
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
