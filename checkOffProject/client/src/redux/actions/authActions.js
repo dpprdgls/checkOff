@@ -40,7 +40,7 @@ export const loginUser = (email, password) => async (dispatch) => {
     
     // Delay the redirect to ensure Redux action completes first
     setTimeout(() => {
-      window.location.assign(`http://localhost:4000/api/auth/login/${data.user.id}/tasks`);
+      window.location.assign(`http://localhost:3000/api/auth/login/${data.user.id}/tasks`);
     }, 100);
   } catch (error) {
     const errorMessage = error.response ? error.response.data.message : error.message;
