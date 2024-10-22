@@ -27,8 +27,13 @@ export const createTask = (taskData) => async (dispatch) => {
       },
       body: JSON.stringify(taskData),
     });
+    if (!response.ok) {
+      throw new Error('Failed to create task');
+    }
+
     const newTask = await response.json();
     dispatch({ type: CREATE_TASK_SUCCESS, payload: newTask });
+    console.log('Task created successfully:', newTask);
   } catch (error) {
     console.error('Error creating task:', error);
   }

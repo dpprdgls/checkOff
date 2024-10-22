@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Task = require('../models/Task');
 
 // Fetch tasks specific to the logged-in user
@@ -7,8 +8,8 @@ exports.getAllTasks = async (req, res) => {
     const userId = req.user.id;
 
     // Fetch tasks that belong to the logged-in user
-    const tasks = await Task.find({ user: userId });
-    
+    const tasks = await Task.find({ userId: userId });  // Consistent field name
+
     if (tasks.length === 0) {
       return res.status(404).json({ message: 'No tasks found' });
     }
@@ -21,21 +22,31 @@ exports.getAllTasks = async (req, res) => {
 
 // Create a new task for the logged-in user
 exports.createTask = async (req, res) => {
-  const userId = req.user.id;  // Get the logged-in user's ID from the request
-
-  const task = new Task({
-    title: req.body.title,
-    notes: req.body.notes,
-    itemsRequired: req.body.itemsRequired,
-    cost: req.body.cost,
-    category: req.body.category,
-    user: userId  // Associate the task with the logged-in user (user field)
-  });
+  const { title, notes, itemsRequired, cost, category } = req.body;
 
   try {
-    const newTask = await task.save();
-    res.status(201).json(newTask);
-  } catch (err) {
-    res.status(400).json({ message: 'Error creating task.', error: err });
+    // Create a new task with the logged-in user's ID
+    const newTask = new Task({
+      title,
+      notes,
+      itemsRequired,
+      cost,
+      category,
+      userId: req.user.id  // Ensure the `userId` is being passed correctly from the JWT middleware
+    });
+
+    // Validate the new task before saving
+    const validationError = newTask.validateSync();
+    if (validationError) {
+      console.error('Validation error:', validationError);
+      return res.status(400).json({ message: 'Validation failed', error: validationError });
+    }
+
+    // Save the new task
+    const savedTask = await newTask.save();
+    res.status(201).json(savedTask);
+  } catch (error) {
+    console.error('Error creating task:', error);  // Log the error to help debug
+    res.status(500).json({ message: 'Error creating task', error });
   }
 };

@@ -6,8 +6,8 @@ import {
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
-    LOGOUT,
-  } from '../actions/userActions.js'; // Ensure the path is correct
+    LOGOUT_SUCCESS,
+  } from '../actions/authActions.js'; // Ensure the path is correct
   
   const initialState = {
     isAuthenticated: false,
@@ -30,7 +30,7 @@ import {
         return { ...state, loading: false };
       case REGISTER_FAILURE:
         return { ...state, loading: false, error: action.payload };
-      case LOGOUT:
+      case LOGOUT_SUCCESS:
         return { ...state, loading: false, isAuthenticated: false, token: null, error: action.payload };
       default:
         return state;

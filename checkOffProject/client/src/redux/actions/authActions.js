@@ -88,6 +88,9 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
+
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
@@ -170,4 +173,14 @@ export const registerUser = (email, username, password) => async (dispatch) => {
     const errorMessage = error.response ? error.response.data.message : error.message;
     dispatch(registerFailure(errorMessage));
   }
+};
+
+
+// Logout user
+export const logoutUser = () => (dispatch) => {
+  // Clear local storage and token
+  localStorage.removeItem('token');
+  
+  // Redirect or handle logout success here if needed
+  dispatch({ type: 'LOGOUT_SUCCESS' });
 };

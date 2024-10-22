@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Your API routes go here, for example:
-app.use('/api', require('./routes/apiRoutes')); // Add authentication routes
+app.use('/api', require('./routes/apiRoutes'));
+app.use('/api', require('./routes/apiRoutes/taskRoutes')); // Add authentication routes
 // app.use('/api/tasks', require('./routes/taskRoutes')); // Add other routes
 
 // Serve static files from the React app in production
