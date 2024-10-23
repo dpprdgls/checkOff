@@ -50,3 +50,22 @@ exports.createTask = async (req, res) => {
     res.status(500).json({ message: 'Error creating task', error });
   }
 };
+
+exports.deleteTask = async (req, res) => {
+    try {
+    const taskId = req.params.taskId;
+    const userId = req.user.id;
+
+    const task = await Task.findById({ _id: taskId, userId });
+
+    if (!task) {
+        return res.status(404).json({ message: 'Task not found or user not found' });
+    }
+
+    await task.remove();
+    res.status(200).json({ message: 'Task deleted successfully' });
+}catch (error) {
+    console.error('Error deleting task', error);
+    res.status(500).json({ message: 'Error deleting task', error});
+}
+}

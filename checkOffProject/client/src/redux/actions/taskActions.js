@@ -2,6 +2,9 @@
 
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
+export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
+export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE';
+
 
 export const fetchTasks = () => async (dispatch) => {
   try {
@@ -37,4 +40,26 @@ export const createTask = (taskData) => async (dispatch) => {
   } catch (error) {
     console.error('Error creating task:', error);
   }
+};
+
+export const deleteTask = (taskId) => async (dispatch) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`http://localhost:4000/api/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete task');
+        }
+
+     
+        dispatch({ type: DELETE_TASK_SUCCESS, payload: taskId });
+    } catch (error) {
+        console.error('Error deleting task', error);
+        dispatch({ type: DELETE_TASK_FAILURE, payload: error.message });
+    }
 };
