@@ -62,7 +62,7 @@ const Tasks = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-500">Your Tasks</h1>
+      <h1 className='text-4xl md:text-7xl mb-1 md:mb-3 font-bold text-gray-500'>Your Tasks</h1>
 
       {error && <div>Error: {error}</div>}
 
