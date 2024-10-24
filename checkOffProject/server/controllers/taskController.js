@@ -51,6 +51,46 @@ exports.createTask = async (req, res) => {
   }
 };
 
+// Update a task for the logged-in user
+exports.updateTask = async (req, res) => {
+    const taskId = req.params.taskId; // Get the task ID from the request parameters
+    const userId = req.user.id; // Get the logged-in user's ID from the request (set in the auth middleware)
+  
+    try {
+      // Find the task by ID and ensure it belongs to the logged-in user
+      const task = await Task.findOne({ _id: taskId, userId });
+  
+      if (!task) {
+        return res.status(404).json({ message: 'Task not found or user not authorized' });
+      }
+  
+      // Update the task fields with the data from the request body
+      const { title, notes, itemsRequired, cost, category } = req.body;
+  
+      // Update the task object. Use the spread operator to maintain the existing fields.
+      task.title = title !== undefined ? title : task.title; // Only update if provided
+      task.notes = notes !== undefined ? notes : task.notes;
+      task.itemsRequired = itemsRequired !== undefined ? itemsRequired : task.itemsRequired;
+      task.cost = cost !== undefined ? cost : task.cost;
+      task.category = category !== undefined ? category : task.category;
+  
+      // Validate the updated task before saving
+      const validationError = task.validateSync();
+      if (validationError) {
+        console.error('Validation error:', validationError);
+        return res.status(400).json({ message: 'Validation failed', error: validationError });
+      }
+  
+      // Save the updated task
+      const updatedTask = await task.save();
+      res.status(200).json(updatedTask);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      res.status(500).json({ message: 'Failed to update task', error });
+    }
+  };
+
+  
 exports.deleteTask = async (req, res) => {
     try {
     const taskId = req.params.taskId;
@@ -64,7 +104,7 @@ exports.deleteTask = async (req, res) => {
 
     await task.remove();
     res.status(200).json({ message: 'Task deleted successfully' });
-}catch (error) {
+} catch (error) {
     console.error('Error deleting task', error);
     res.status(500).json({ message: 'Error deleting task', error});
 }

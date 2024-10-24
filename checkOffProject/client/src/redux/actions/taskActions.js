@@ -2,6 +2,10 @@
 
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
+
+export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
+export const UPDATE_TASK_FAILURE = 'UPDATE_TASK_FAILURE';
+
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
 export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE';
 
@@ -41,6 +45,27 @@ export const createTask = (taskData) => async (dispatch) => {
     console.error('Error creating task:', error);
   }
 };
+
+export const updateTask = (taskId, updatedTaskData) => async (dispatch) => {
+    try {
+        const response = await fetch(`http://localhost:4000/api/tasks/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: JSON.stringify(updatedTaskData),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to update task');
+        }
+        const updatedTask = await response.json();
+        dispatch({ type: UPDATE_TASK_SUCCESS, payload: updatedTask });
+        } catch (error) {
+            dispatch({ type: UPDATE_TASK_FAILURE, payload: error.message });
+            console.error('Error updating task:', error);
+        }
+    };
 
 export const deleteTask = (taskId) => async (dispatch) => {
     try {
