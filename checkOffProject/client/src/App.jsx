@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/style.css';
+import './styles/tailwind.css';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
