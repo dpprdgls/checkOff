@@ -1,52 +1,49 @@
+
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../redux/actions/taskActions.js';
+import TaskCard from './TaskCard';
+
 
 const Tasks = () => {
   const dispatch = useDispatch();
-
   const { tasks = [], loading, error } = useSelector((state) => state.tasks);
-
+  
   const [newTask, setNewTask] = useState({
     title: '',
     notes: '',
-    itemsRequired: [''], // Initialize as an array for multiple items
+    itemsRequired: [''],
     cost: '',
     category: ''
   });
 
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [editMode, setEditMode] = useState(null); // Edit mode for a specific item
-  const [editedItem, setEditedItem] = useState(''); // Store edited item content
-  const [taskIdToEdit, setTaskIdToEdit] = useState(null); // Store task ID for editing
+  const [editMode, setEditMode] = useState(null); // Track task in edit mode
+  const [editTask, setEditTask] = useState(null); // Store task being edited
 
   useEffect(() => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  // Handle task creation
   const handleCreateTask = async () => {
     try {
       await dispatch(createTask(newTask));
-      setShowCreateForm(false); // Hide the form after creating a task
-      setNewTask({ title: '', notes: '', itemsRequired: [''], cost: '', category: '' }); // Reset form fields
+      setShowCreateForm(false);
+      setNewTask({ title: '', notes: '', itemsRequired: [''], cost: '', category: '' });
     } catch (error) {
       console.error('Error creating task:', error);
     }
   };
 
-  const handleEditItem = async (taskId, itemIndex, updatedItem) => {
-    const taskToEdit = tasks.find((task) => task._id === taskId);
+  const handleEditTask = (task) => {
+    setEditMode(task._id);
+    setEditTask({ ...task }); // Populate edit form with task details
+  };
 
-    // Ensure the itemsRequired array is properly updated with the edited item
-    const updatedItems = [...taskToEdit.itemsRequired];
-    updatedItems[itemIndex] = updatedItem;
-
-    const updatedTask = { ...taskToEdit, itemsRequired: updatedItems }; // Update only the itemsRequired array
-
+  const handleSaveEdit = async () => {
     try {
-      await dispatch(updateTask(taskId, updatedTask)); // Dispatch the updateTask action
-      setEditMode(null); // Exit edit mode after updating
+      await dispatch(updateTask(editMode, editTask));
+      setEditMode(null); // Exit edit mode
     } catch (error) {
       console.error('Error updating task:', error);
     }
@@ -61,11 +58,11 @@ const Tasks = () => {
   };
 
   return (
+    <div className="tasksWrapper">
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <h1 className='text-4xl md:text-7xl mb-1 md:mb-3 font-bold text-gray-500'>Your Tasks</h1>
 
       {error && <div>Error: {error}</div>}
-
       {loading ? (
         <div>Loading tasks...</div>
       ) : tasks.length === 0 ? (
@@ -74,43 +71,72 @@ const Tasks = () => {
           <button onClick={() => setShowCreateForm(true)}>Create Task</button>
         </div>
       ) : (
-        <div>
+        <div className='taskCardContainer'>
           {tasks.map((task) => (
             <div key={task._id}>
-              <h2>{task.title}</h2>
-              <p>{task.notes}</p>
-              <p>Cost: ${task.cost}</p>
-              <p>Category: {task.category}</p>
+              {editMode === task._id ? (
+                <div>
+                  {/* Edit Form with Field Labels */}
+                  <div>
+                    <label>Title</label>
+                    <input
+                      type="text"
+                      value={editTask.title}
+                      onChange={(e) => setEditTask({ ...editTask, title: e.target.value })}
+                    />
+                  </div>
 
-              <h3>Items Required:</h3>
-              <ul>
-                {task.itemsRequired.map((item, index) => (
-                  <li key={index}>
-                    {editMode === `${task._id}-${index}` ? (
-                      <>
-                        <input
-                          type="text"
-                          value={editedItem}
-                          onChange={(e) => setEditedItem(e.target.value)}
-                        />
-                        <button onClick={() => handleEditItem(task._id, index, editedItem)}>Save</button>
-                        <button onClick={() => setEditMode(null)}>Cancel</button>
-                      </>
-                    ) : (
-                      <>
-                        {item}
-                        <button onClick={() => {
-                          setEditMode(`${task._id}-${index}`);
-                          setEditedItem(item);
-                        }}>Edit</button>
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                  <div>
+                    <label>Notes</label>
+                    <textarea
+                      value={editTask.notes}
+                      onChange={(e) => setEditTask({ ...editTask, notes: e.target.value })}
+                    />
+                  </div>
 
-              {/* Delete button for the entire task */}
-              <button onClick={() => handleDeleteTask(task._id)}>Delete Task</button>
+                  <div>
+                    <label>Items Required (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={editTask.itemsRequired.join(', ')}
+                      onChange={(e) =>
+                        setEditTask({
+                          ...editTask,
+                          itemsRequired: e.target.value.split(',').map((item) => item.trim())
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label>Cost</label>
+                    <input
+                      type="text"
+                      value={editTask.cost}
+                      onChange={(e) => setEditTask({ ...editTask, cost: e.target.value })}
+                    />
+                  </div>
+
+                  <div>
+                    <label>Category</label>
+                    <input
+                      type="text"
+                      value={editTask.category}
+                      onChange={(e) => setEditTask({ ...editTask, category: e.target.value })}
+                    />
+                  </div>
+
+                  <button onClick={handleSaveEdit}>Save</button>
+                  <button onClick={() => setEditMode(null)}>Cancel</button>
+                </div>
+              ) : (
+                <>
+                  {/* Task Card */}
+                  <TaskCard task={task} />
+                  <button onClick={() => handleEditTask(task)}>Edit</button>
+                  <button onClick={() => handleDeleteTask(task._id)}>Delete Task</button>
+                </>
+              )}
             </div>
           ))}
           <button onClick={() => setShowCreateForm(true)}>Create New Task</button>
@@ -134,7 +160,7 @@ const Tasks = () => {
           <input
             type="text"
             placeholder="Items Required (comma-separated)"
-            value={newTask.itemsRequired.join(', ')} // Join array for display
+            value={newTask.itemsRequired.join(', ')}
             onChange={(e) => setNewTask({ ...newTask, itemsRequired: e.target.value.split(',').map(item => item.trim()) })}
           />
           <input
@@ -153,6 +179,7 @@ const Tasks = () => {
           <button onClick={() => setShowCreateForm(false)}>Cancel</button>
         </div>
       )}
+    </div>
     </div>
   );
 };

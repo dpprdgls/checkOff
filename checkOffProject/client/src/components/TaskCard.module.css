@@ -1,13 +1,32 @@
+
+
+
+
+/* Center the task card container within the parent container */
+.taskCardContainer {
+  display: flex;
+  flex-wrap: wrap;            /* Allow cards to wrap to new rows */
+  justify-content: center;     /* Center cards horizontally */
+  gap: 20px;                   /* Space between cards */
+  max-width: 75%;            /* Set max width to avoid stretching */
+  width: 1000px;
+}
+
+
+
+
 .taskCard {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 10px;
-    width: 300px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
+  flex: 1 1 calc(33.333% - 20px); 
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;  
+  min-width: 200px;             /* Limit width for each card */
+  transition: transform 0.3s ease;
+}
   
   .taskCard:hover {
     transform: scale(1.05);
@@ -16,6 +35,7 @@
   .taskCardTitle {
     font-size: 1.2rem;
     font-weight: bold;
+
   }
   
   .taskCardDetails {
