@@ -51,6 +51,7 @@ const Tasks = () => {
 
   const handleDeleteTask = async (taskId) => {
     try {
+      console.log('Deleting task:', taskId);
       await dispatch(deleteTask(taskId));
     } catch (error) {
       console.error('Error deleting task:', error);

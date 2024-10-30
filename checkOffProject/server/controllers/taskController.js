@@ -90,22 +90,27 @@ exports.updateTask = async (req, res) => {
     }
   };
 
-  
+
 exports.deleteTask = async (req, res) => {
     try {
-    const taskId = req.params.taskId;
-    const userId = req.user.id;
+        const taskId = req.params.taskId;
+        const userId = req.user.id; // Assuming `req.user.id` is set by your auth middleware
+        console.log("Attempting to delete task with ID:", taskId, "for user:", userId);
 
-    const task = await Task.findById({ _id: taskId, userId });
+        // Find the task by _id and userId
+        const task = await Task.findOne({ _id: taskId, userId });
 
-    if (!task) {
-        return res.status(404).json({ message: 'Task not found or user not found' });
+        if (!task) {
+            console.log("Task not found or user not authorized"); // Log if task not found
+
+            return res.status(404).json({ message: 'Task not found or user not authorized' });
+        }
+
+        // Remove the task
+        await task.deleteOne();
+        res.status(200).json({ message: 'Task deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting task', error);
+        res.status(500).json({ message: 'Error deleting task', error: error.message });
     }
-
-    await task.remove();
-    res.status(200).json({ message: 'Task deleted successfully' });
-} catch (error) {
-    console.error('Error deleting task', error);
-    res.status(500).json({ message: 'Error deleting task', error});
-}
-}
+};

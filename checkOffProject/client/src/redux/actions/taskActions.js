@@ -6,9 +6,10 @@ export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
 export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS';
 export const UPDATE_TASK_FAILURE = 'UPDATE_TASK_FAILURE';
 
+// Define or import these action types at the top of taskActions.js
+export const DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST';
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
 export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE';
-
 
 export const fetchTasks = () => async (dispatch) => {
   try {
@@ -69,6 +70,8 @@ export const updateTask = (taskId, updatedTaskData) => async (dispatch) => {
 
 export const deleteTask = (taskId) => async (dispatch) => {
     try {
+        dispatch({ type: DELETE_TASK_REQUEST });
+        console.log('Deleting task:', taskId);
         const token = localStorage.getItem('token');
         const response = await fetch(`http://localhost:4000/api/tasks/${taskId}`, {
             method: 'DELETE',
