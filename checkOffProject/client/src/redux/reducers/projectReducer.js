@@ -7,7 +7,7 @@ import {
     UPDATE_PROJECT_FAILURE,
     DELETE_PROJECT_SUCCESS,
     DELETE_PROJECT_FAILURE,
-} from '../actions/prjectActions.js';
+} from '../actions/projectActions.js';
 
 const initialState = [];
 
