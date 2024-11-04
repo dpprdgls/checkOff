@@ -6,6 +6,7 @@ import RegisterForm from './components/RegisterForm';
 import Home from './components/Home';
 import Tasks from './components/Tasks'; 
 import NavBar from './components/Navbar';
+import Projects from './components/Projects';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/home" element={<Home />} />
           <Route path='/login/:id/tasks' element={<Tasks />} />
+          <Route path='/projects' element={<Projects />} />
           {/* Add more routes as needed */}
         </Routes>
       </Router>

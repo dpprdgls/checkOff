@@ -3,9 +3,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import taskReducer from '../reducers/taskReducer.js'; // Assuming this is the path to your task reducer
 import authReducer from '../reducers/authReducer.js'; // Assuming this is the path to your auth reducer
+import projectReducer from '../reducers/projectReducer.js'; // Assuming this is the path to your project reducer
 const rootReducer = combineReducers({
   tasks: taskReducer,
   auth: authReducer,
+  projects: projectReducer, 
   // other reducers...
 });
 

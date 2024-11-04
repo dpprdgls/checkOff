@@ -22,6 +22,11 @@ return (
             Tasks
           </NavLink>
             </li>
+            <li>
+            <NavLink to='/projects' className={location.pathname === '/projects' ? 'active-link' : ''}>
+            Projects
+          </NavLink>
+            </li>
          </ul>
     </div>
 );

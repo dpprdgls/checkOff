@@ -1,7 +1,7 @@
 // redux/reducers/projectReducer.js
 
 import { 
-    FETCH_PROJECT_SUCCESS, 
+    FETCH_PROJECTS_SUCCESS, 
     CREATE_PROJECT_SUCCESS,
     UPDATE_PROJECT_SUCCESS,
     UPDATE_PROJECT_FAILURE,
@@ -9,11 +9,15 @@ import {
     DELETE_PROJECT_FAILURE,
 } from '../actions/projectActions.js';
 
-const initialState = [];
+const initialState = {
+    projects: [],
+    loading: false,
+    error: null,
+};
 
 const projectReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PROJECT_SUCCESS:
+    case FETCH_PROJECTS_SUCCESS:
         return { 
             ...state, 
             projects: action.payload, 

@@ -13,7 +13,7 @@ export const DELETE_PROJECT_FAILURE = 'DELETE_PROJECT_FAILURE';
 
 export const fetchProjects = () => async (dispatch) => {
   try {
-    const response = await fetch('http://localhost:4000/api/tasks', {
+    const response = await fetch('http://localhost:4000/api/projects', {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
