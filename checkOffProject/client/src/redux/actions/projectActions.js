@@ -27,7 +27,7 @@ export const fetchProjects = () => async (dispatch) => {
 
 export const createProjects = (projectData) => async (dispatch) => {
   try {
-    const response = await fetch('http://localhost:4000/api/tasks', {
+    const response = await fetch('http://localhost:4000/api/projects', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const createProjects = (projectData) => async (dispatch) => {
       body: JSON.stringify(projectData),
     });
     if (!response.ok) {
-      throw new Error('Failed to create task');
+      throw new Error('Failed to create project');
     }
 
     const newProject = await response.json();
@@ -70,8 +70,8 @@ export const updateProject = (projectId, updatedProjectData) => async (dispatch)
 
 export const deleteProject = (projectId) => async (dispatch) => {
     try {
-        dispatch({ type: DELETE_TASK_REQUEST });
-        console.log('Deleting task:', taskId);
+        dispatch({ type: DELETE_PROJECT_REQUEST });
+        console.log('Deleting project:', projectId);
         const token = localStorage.getItem('token');
         const response = await fetch(`http://localhost:4000/api/projects/${projectId}`, {
             method: 'DELETE',
