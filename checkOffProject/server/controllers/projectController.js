@@ -44,6 +44,26 @@ exports.createProject = async (req, res) => {
   }
 };
 
+// controllers/projectController.js
+
+exports.updateProject = async (req, res) => {
+  const projectId = req.params.projectId;
+  const updatedData = req.body;
+
+  try {
+    const project = await Project.findByIdAndUpdate(projectId, updatedData, { new: true });
+
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    res.status(200).json(project);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating project', error });
+  }
+};
+
+
 // Add a task to an existing project
 exports.addTaskToProject = async (req, res) => {
   const projectId = req.params.projectId;
