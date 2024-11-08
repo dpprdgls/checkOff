@@ -6,6 +6,9 @@ export const CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
 
+export const ADD_TASK_TO_PROJECT_SUCCESS = 'ADD_TASK_TO_PROJECT_SUCCESS';
+export const ADD_TASK_TO_PROJECT_FAILURE = 'ADD_TASK_TO_PROJECT_FAILURE';
+
 // Define or import these action types at the top of taskActions.js
 export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST';
 export const DELETE_PROJECT_SUCCESS = 'DELETE_PROJECT_SUCCESS';
@@ -67,6 +70,32 @@ export const updateProject = (projectId, updatedProjectData) => async (dispatch)
             console.error('Error updating project:', error);
         }
     };
+
+    // redux/actions/projectActions.js
+
+export const addTaskToProject = (projectId, taskId) => async (dispatch) => {
+  try {
+    const response = await fetch(`http://localhost:4000/api/projects/${projectId}/addTask`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify({ taskId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add task to project');
+    }
+
+    const updatedProject = await response.json();
+    dispatch({ type: 'ADD_TASK_TO_PROJECT_SUCCESS', payload: updatedProject });
+  } catch (error) {
+    dispatch({ type: 'ADD_TASK_TO_PROJECT_FAILURE', payload: error.message });
+    console.error('Error adding task to project:', error);
+  }
+};
+
 
 export const deleteProject = (projectId) => async (dispatch) => {
     try {

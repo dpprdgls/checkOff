@@ -10,6 +10,8 @@ router.post('/', authMiddleware, projectController.createProject);
 
 router.put('/:projectId', authMiddleware, projectController.updateProject);
 
+router.put('/:projectId/addTask', authMiddleware, projectController.addTaskToProject);
+
 router.delete('/:projectId/tasks', authMiddleware, projectController.removeTaskFromProject);
 
 router.delete('/:projectId', authMiddleware, projectController.deleteProject);

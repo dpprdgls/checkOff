@@ -9,7 +9,11 @@ import {
     DELETE_TASK_FAILURE,
 } from '../actions/taskActions.js';
 
-const initialState = [];
+const initialState = {
+    tasks: [],  // Initialize tasks as an empty array
+    loading: false,
+    error: null,
+  };
 
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {

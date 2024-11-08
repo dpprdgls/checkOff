@@ -43,6 +43,18 @@ const projectReducer = (state = initialState, action) => {
             ...state,
             error: action.payload,
         };
+        case 'ADD_TASK_TO_PROJECT_SUCCESS':
+            return {
+              ...state,
+              projects: state.projects.map((project) =>
+                project._id === action.payload._id ? action.payload : project
+              ),
+            };
+          case 'ADD_TASK_TO_PROJECT_FAILURE':
+            return {
+              ...state,
+              error: action.payload,
+            };
     case DELETE_PROJECT_SUCCESS:
         return { ...state,
             loading: false,
