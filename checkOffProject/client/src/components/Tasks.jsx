@@ -140,7 +140,9 @@ const Tasks = () => {
               )}
             </div>
           ))}
+          <div className='createTaskWrapper'>
           <button onClick={() => setShowCreateForm(true)}>Create New Task</button>
+          </div>
         </div>
       )}
 
