@@ -13,7 +13,7 @@ return (
     <div className='fixed w-full h-[80px] flex justify-between items-center px-4 bg-slate text-gray-300'>
          <ul className='hidden md:flex'>
             <li>
-            <NavLink exact to='/' className={location.pathname === '/' ? 'active-link' : ''}>
+            <NavLink to='/' className={location.pathname === '/' ? 'active-link' : ''}>
             Home
           </NavLink>
             </li>

@@ -11,6 +11,11 @@ export default defineConfig({
         target: 'http://localhost:4000',
         changeOrigin: true,
         secure: false
+      },
+      '/quotes-api': {
+        target: 'https://zenquotes.io',
+        changeOrigin: true,
+        reWrite: (path) => path.replace(/^\/quotes-api/, '')
       }
     }
   }
