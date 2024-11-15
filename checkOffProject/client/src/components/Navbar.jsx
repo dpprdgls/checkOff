@@ -10,7 +10,7 @@ const NavBar = () => {
 
 
 return (
-    <div className='fixed w-full h-[80px] flex justify-between items-center px-4 bg-slate text-gray-300'>
+    <div className='fixed w-full h-[80px] flex justify-between items-center px-4 bg-slate-500 text-gray-300 mb-8'>
          <ul className='hidden md:flex'>
             <li>
             <NavLink to='/' className={location.pathname === '/' ? 'active-link' : ''}>

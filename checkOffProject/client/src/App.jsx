@@ -11,9 +11,11 @@ import Projects from './components/Projects';
 const App = () => {
   return (
     <div>
-     
+      <div className='bg-white text-stone-900 min-h-screen font-inter max-w-5xl w-11/12 mx-auto'>
       <Router>
       <NavBar />
+
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
@@ -24,6 +26,7 @@ const App = () => {
           {/* Add more routes as needed */}
         </Routes>
       </Router>
+      </div>
     </div>
   );
 };

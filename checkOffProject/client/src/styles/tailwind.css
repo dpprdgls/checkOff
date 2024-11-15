@@ -22,6 +22,11 @@
     color: #dd6b20;
 }
 
+li {
+  font: Raleway;
+  
+}
+
 .tasksWrapper {
     display: flex;
     flex-direction: column;
