@@ -3,6 +3,9 @@ export default {
   content: [
     './index.html','./src/**/*.{js,jsx,ts,tsx}'
   ],
+  safelist: [
+    'active-link',
+  ],
   theme: {
     extend: {},
   },

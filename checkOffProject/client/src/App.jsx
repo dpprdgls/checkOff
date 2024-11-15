@@ -10,23 +10,20 @@ import Projects from './components/Projects';
 
 const App = () => {
   return (
-    <div>
-      <div className='bg-white text-stone-900 min-h-screen font-inter max-w-5xl w-11/12 mx-auto'>
+    <div className='bg-white text-stone-900 min-h-screen font-inter'>
       <Router>
-      <NavBar />
-
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/home" element={<Home />} />
-          <Route path='/login/:id/tasks' element={<Tasks />} />
-          <Route path='/projects' element={<Projects />} />
-          {/* Add more routes as needed */}
-        </Routes>
+        <NavBar />
+        <div className="max-w-5xl w-11/12 mx-auto mt-8 p-4"> {/* Added padding for spacing */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route path='/login/:id/tasks' element={<Tasks />} />
+            <Route path='/projects' element={<Projects />} />
+            {/* Add more routes as needed */}
+          </Routes>
+        </div>
       </Router>
-      </div>
     </div>
   );
 };
