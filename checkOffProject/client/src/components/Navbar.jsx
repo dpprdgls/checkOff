@@ -66,3 +66,5 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+//is this the current file?
