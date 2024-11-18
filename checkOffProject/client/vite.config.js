@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  root: './client',
+  css: {
+    postcss: './postcss.config.cjs'
+  },
   server: {
     port: 3000,
     proxy: {
@@ -15,7 +19,7 @@ export default defineConfig({
       '/quotes-api': {
         target: 'https://zenquotes.io',
         changeOrigin: true,
-        reWrite: (path) => path.replace(/^\/quotes-api/, '')
+        rewrite: (path) => path.replace(/^\/quotes-api/, '')
       }
     }
   }
