@@ -1,9 +1,10 @@
 
-
+import '../styles/tailwind.css';
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../redux/actions/authActions';
+
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const NavBar = () => {
   };
 
   return (
+    <div className='navWrapper'>
     <nav className="fixed w-full h-[80px] flex justify-between items-center px-6 bg-slate-700 text-gray-300 shadow-md">
       {/* Logo or Brand Name */}
       <div className="flex items-center space-x-4 px-4">
@@ -40,7 +42,7 @@ const NavBar = () => {
   <NavLink
     to="/projects"
     className={({ isActive }) =>
-      `nav-button ${isActive ? 'bg-gray-700' : ''}`
+      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
     }
   >
     Projects
@@ -74,6 +76,7 @@ const NavBar = () => {
         )}
       </div>
     </nav>
+    </div>
   );
 };
 

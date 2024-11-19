@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjects, createProjects, deleteProject, updateProject, addTaskToProject } from '../redux/actions/projectActions';
 import { createTask } from '../redux/actions/taskActions'; // Import createTask action
 import ProjectCard from './ProjectCard';
+import '../styles/tailwind.css';
 
 const Projects = () => {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const Projects = () => {
   return (
     <div className="projectsWrapper">
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <h1 className='text-4xl md:text-7xl mb-1 md:mb-3 font-bold text-gray-500'>Your Projects</h1>
+        <h1 className='text-4xl md:text-7xl mb-1 md:mb-3 italic text-gray-500'>Your Projects</h1>
 
         {error && <div>Error: {error}</div>}
         {loading ? (

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTasks, createTask, deleteTask, updateTask } from '../redux/actions/taskActions.js';
 import TaskCard from './TaskCard';
+import '../styles/tailwind.css';
 
 
 const Tasks = () => {

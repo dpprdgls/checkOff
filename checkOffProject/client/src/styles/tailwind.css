@@ -31,6 +31,9 @@
   .nav-button {
     @apply text-white bg-gray-600 hover:bg-gray-700 border border-gray-500 px-4 py-2 rounded-md;
   }
+  .btn-primary {
+    @apply py-2 px-5 bg-violet-500 text-white font-semibold rounded-full shadow-md hover:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-400 focus:ring-opacity-75;
+  }
 }
 
 .tasksWrapper {
@@ -95,4 +98,27 @@
 
 .test-navbar {
   @apply fixed w-full h-[80px] flex justify-between items-center px-6 bg-slate-700 text-gray-300 shadow-md;
+}
+
+.navWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 20vh; /* Center vertically */
+  padding: 20px;
+  text-align: center;
+  background-color: #f7f7f7; 
+
+}
+
+.navi-btn {
+  background-color: antiquewhite;
+  color:#3182ce;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.italic {
+  font-style: italic;
 }
