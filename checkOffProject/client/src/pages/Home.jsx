@@ -86,7 +86,7 @@ const Home = () => {
       <h1 className="text-4xl font-bold mb-4">Welcome to Your Task Manager</h1>
       <div className="my-4">
         <img src="/vite.svg" alt="Task Manager" className="w-40 h-auto mx-auto mb-2" />
-        <p>It's working now!</p>
+        
       </div>
       {quoteLoading && <p>Loading quote...</p>}
       {quoteError && <p>Error fetching quote: {quoteError}</p>}

@@ -18,23 +18,23 @@ const NavBar = () => {
   };
 
   return (
-    <div className='navWrapper'>
-    <nav className="fixed w-full h-[80px] flex justify-between items-center px-6 bg-slate-700 text-gray-300 shadow-md">
+    <div className='navWrapper fixed w-full'>
+    <nav className="fixed w-full h-[50px] flex justify-between items-center px-6 bg-gray-100 text-gray-300 shadow-md">
       {/* Logo or Brand Name */}
-      <div className="flex items-center space-x-4 px-4">
+      <div className="flex items-center space-x-4 px-8">
   <NavLink
     to="/"
     className={({ isActive }) =>
-      `nav-button ${isActive ? 'bg-gray-700' : ''}`
+      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
     }
   >
     Home
   </NavLink>
-  <button class='btn-primary'>Test</button>
+  
   <NavLink
     to="/login/:id/tasks"
     className={({ isActive }) =>
-      `nav-button ${isActive ? 'bg-gray-700' : ''}`
+      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
     }
   >
     Tasks
@@ -54,7 +54,7 @@ const NavBar = () => {
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="logout-btn"
           >
             Logout
           </button>
