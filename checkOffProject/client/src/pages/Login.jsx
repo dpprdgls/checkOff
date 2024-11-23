@@ -32,7 +32,7 @@ const Login = () => {
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
-                  className="form-input"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md"
                   placeholder="Your email"
                   name="email"
                   type="email"
@@ -40,7 +40,7 @@ const Login = () => {
                   onChange={handleChange}
                 />
                 <input
-                  className="form-input"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md"
                   placeholder="******"
                   name="password"
                   type="password"
@@ -48,7 +48,7 @@ const Login = () => {
                   onChange={handleChange}
                 />
                 <button
-                  className="btn btn-block btn-info"
+                  className="block w-full px-3 py-2 border border-gray-300 rounded-md"
                   style={{ cursor: 'pointer' }}
                   type="submit"
                 >

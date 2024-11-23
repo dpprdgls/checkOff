@@ -1,12 +1,10 @@
-
 import '../styles/tailwind.css';
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../redux/actions/authActions';
 
-
-const NavBar = () => {
+const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -18,68 +16,77 @@ const NavBar = () => {
   };
 
   return (
-    <div className='navWrapper fixed w-full'>
-    <nav className="fixed w-full h-[50px] flex justify-between items-center px-6 bg-gray-100 text-gray-300 shadow-md">
+    <div className="fixed top-0 left-0 h-full w-[250px] bg-gray-800 text-gray-300 shadow-lg">
       {/* Logo or Brand Name */}
-      <div className="flex items-center space-x-4 px-8">
-  <NavLink
-    to="/"
-    className={({ isActive }) =>
-      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
-    }
-  >
-    Home
-  </NavLink>
-  
-  <NavLink
-    to="/login/:id/tasks"
-    className={({ isActive }) =>
-      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
-    }
-  >
-    Tasks
-  </NavLink>
-  <NavLink
-    to="/projects"
-    className={({ isActive }) =>
-      `navi-btn ${isActive ? 'bg-gray-700' : ''}`
-    }
-  >
-    Projects
-  </NavLink>
-</div>
+      <div className="p-4 text-2xl font-bold text-white border-b border-gray-600">
+        MyApp
+      </div>
+
+      {/* Navigation Links */}
+      <div className="flex flex-col p-4 space-y-4">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `py-2 px-4 rounded text-lg hover:bg-gray-700 hover:text-white ${
+              isActive ? 'bg-gray-700 text-white' : ''
+            }`
+          }
+        >
+          Home
+        </NavLink>
+        <NavLink
+          to="/login/:id/tasks"
+          className={({ isActive }) =>
+            `py-2 px-4 rounded text-lg hover:bg-gray-700 hover:text-white ${
+              isActive ? 'bg-gray-700 text-white' : ''
+            }`
+          }
+        >
+          Tasks
+        </NavLink>
+        <NavLink
+          to="/projects"
+          className={({ isActive }) =>
+            `py-2 px-4 rounded text-lg hover:bg-gray-700 hover:text-white ${
+              isActive ? 'bg-gray-700 text-white' : ''
+            }`
+          }
+        >
+          Projects
+        </NavLink>
+      </div>
 
       {/* Auth Buttons */}
-      <div>
+      <div className="absolute bottom-4 left-0 w-full px-4">
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
-            className="logout-btn"
+            className="w-full py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-bold rounded"
           >
             Logout
           </button>
         ) : (
-          <div className="flex space-x-4">
+          <div className="flex flex-col space-y-2">
             <NavLink
               to="/login"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded text-center"
             >
               Login
             </NavLink>
             <NavLink
               to="/register"
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              className="py-2 px-4 bg-green-500 hover:bg-green-700 text-white font-bold rounded text-center"
             >
               Register
             </NavLink>
           </div>
         )}
       </div>
-    </nav>
     </div>
   );
 };
 
-export default NavBar;
+export default Sidebar;
 
-//is this the current file?
+
+
