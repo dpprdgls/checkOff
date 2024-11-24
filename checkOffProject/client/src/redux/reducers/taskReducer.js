@@ -13,30 +13,29 @@ const initialState = {
     tasks: [],  // Initialize tasks as an empty array
     loading: false,
     error: null,
-  };
+};
 
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TASKS_SUCCESS:
         return { 
             ...state, 
-            tasks: action.payload, 
+            tasks: Array.isArray(action.payload) ? action.payload : [],  // Ensure tasks is always an array
             loading: false 
         };
     case CREATE_TASK_SUCCESS:
         return {
             ...state, 
-            tasks: [
-                ...state.tasks,
-                action.payload
-            ]
+            tasks: Array.isArray(state.tasks) ? [...state.tasks, action.payload] : [action.payload],
         };
     case UPDATE_TASK_SUCCESS:
         return {
             ...state,
-            tasks: state.tasks.map(task =>
-                task._id === action.payload._id ? action.payload : task
-            ),
+            tasks: Array.isArray(state.tasks) 
+                ? state.tasks.map(task =>
+                    task._id === action.payload._id ? action.payload : task
+                  )
+                : [],
         };
     case UPDATE_TASK_FAILURE:
         return {
@@ -44,17 +43,20 @@ const taskReducer = (state = initialState, action) => {
             error: action.payload,
         };
     case DELETE_TASK_SUCCESS:
-        return { ...state,
+        return { 
+            ...state,
             loading: false,
-            tasks: state.tasks.filter(task => 
-                task._id !== action.payload)
+            tasks: Array.isArray(state.tasks) 
+                ? state.tasks.filter(task => task._id !== action.payload)
+                : [],
         };
     case DELETE_TASK_FAILURE:
-        return { ...state, 
+        return { 
+            ...state, 
             loading: false, 
-            error: action.payload }
-    
-        default:
+            error: action.payload 
+        };
+    default:
         return state;
   }
 };

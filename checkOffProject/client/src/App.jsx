@@ -1,26 +1,30 @@
-
-// App.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import './styles/tailwind.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
+import Sidebar from './components/Sidebar';
 import Home from './pages/Home.jsx';
 import Tasks from './components/Tasks';
-import NavBar from './components/Navbar';
 import Projects from './components/Projects';
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
 
 const App = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div className="flex">
       <Router>
-        <NavBar />
-        <div className="ml-56 w-full p-4"> {/* Adds left margin for sidebar */}
+        <Sidebar isHovered={isHovered} setIsHovered={setIsHovered} />
+        <div
+          className={`transition-all duration-300 ${
+            isHovered ? 'ml-64' : 'ml-16'
+          } w-full p-4`}
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login/:id/tasks" element={<Tasks />} />
+            <Route path="/tasks" element={<Tasks />} />
             <Route path="/projects" element={<Projects />} />
           </Routes>
         </div>
