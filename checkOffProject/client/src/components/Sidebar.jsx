@@ -32,7 +32,7 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
+            `flex items-center justify-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
@@ -43,7 +43,7 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
         <NavLink
           to="/tasks"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
+            `flex items-center justify-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
@@ -54,7 +54,7 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
         <NavLink
           to="/projects"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
+            `flex items-center justify-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
