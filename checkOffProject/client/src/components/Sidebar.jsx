@@ -28,39 +28,39 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex flex-col mt-6 space-y-4">
+      <nav className="flex flex-col mt-6 space-y-2">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-2 hover:text-white ${
+            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
         >
-          <span className="material-icons-outlined">home</span>
-          {isHovered && <span>Home</span>}
+          <span className="material-icons-outlined text-lg">home</span>
+          {isHovered && <span className="text-sm font-medium">Home</span>}
         </NavLink>
         <NavLink
           to="/tasks"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-2 hover:text-white ${
+            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
         >
-          <span className="material-icons-outlined">task</span>
-          {isHovered && <span>Tasks</span>}
+          <span className="material-icons-outlined text-lg">task</span>
+          {isHovered && <span className="text-sm font-medium">Tasks</span>}
         </NavLink>
         <NavLink
           to="/projects"
           className={({ isActive }) =>
-            `flex items-center gap-4 px-4 py-2 hover:text-white ${
+            `flex items-center gap-4 px-4 py-3 rounded-md hover:text-white ${
               isActive ? 'bg-gray-700' : ''
             }`
           }
         >
-          <span className="material-icons-outlined">folder</span>
-          {isHovered && <span>Projects</span>}
+          <span className="material-icons-outlined text-lg">folder</span>
+          {isHovered && <span className="text-sm font-medium">Projects</span>}
         </NavLink>
       </nav>
 
@@ -69,23 +69,32 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
-            className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
+            className={`flex items-center justify-center gap-4 w-full text-white py-3 px-4 rounded-md text-center ${
+              isHovered ? 'bg-red-500 hover:bg-red-700' : ''
+            }`}
           >
-            {isHovered ? 'Logout' : <span className="material-icons-outlined">logout</span>}
+            <span className="material-icons-outlined text-lg">logout</span>
+            {isHovered && <span className="text-sm font-medium">Logout</span>}
           </button>
         ) : (
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">
             <NavLink
               to="/login"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 text-center"
+              className={`flex items-center justify-center gap-4 w-full text-white py-3 px-4 rounded-md text-center ${
+                isHovered ? 'bg-stone-500 hover:bg-stone-700' : ''
+              }`}
             >
-              {isHovered ? 'Login' : <span className="material-icons-outlined">login</span>}
+              <span className="material-icons-outlined text-lg">login</span>
+              {isHovered && <span className="text-sm font-medium">Login</span>}
             </NavLink>
             <NavLink
               to="/register"
-              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 text-center"
+              className={`flex items-center justify-center gap-4 w-full text-white py-3 px-4 rounded-md text-center ${
+                isHovered ? 'bg-orange-500 hover:bg-orange-700' : ''
+              }`}
             >
-              {isHovered ? 'Register' : <span className="material-icons-outlined">person_add</span>}
+              <span className="material-icons-outlined text-lg">person_add</span>
+              {isHovered && <span className="text-sm font-medium">Register</span>}
             </NavLink>
           </div>
         )}
