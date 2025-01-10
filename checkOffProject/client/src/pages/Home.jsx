@@ -39,7 +39,7 @@ const Home = () => {
       try {
         setPhotoLoading(true);
 
-        // const accessKey = import.meta.env.UNSPLASH_ACCESS_KEY;
+        // const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
         // console.log('accesskey:', accessKey);
 
         const response = await fetch(
