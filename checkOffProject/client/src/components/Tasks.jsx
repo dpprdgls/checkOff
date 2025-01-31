@@ -177,41 +177,72 @@ const Tasks = () => {
         )}
 
         {showCreateForm && (
-          <div>
-            <h3>Create New Task</h3>
-            <input
-              type="text"
-              placeholder="Title"
-              value={newTask.title}
-              onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-            />
-            <textarea
-              placeholder="Notes"
-              value={newTask.notes}
-              onChange={(e) => setNewTask({ ...newTask, notes: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Items Required (comma-separated)"
-              value={newTask.itemsRequired.join(', ')}
-              onChange={(e) =>
-                setNewTask({ ...newTask, itemsRequired: e.target.value.split(',').map((item) => item.trim()) })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Cost"
-              value={newTask.cost}
-              onChange={(e) => setNewTask({ ...newTask, cost: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Category"
-              value={newTask.category}
-              onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}
-            />
-            <button onClick={handleCreateTask}>Submit</button>
-            <button onClick={() => setShowCreateForm(false)}>Cancel</button>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
+              <h3 className="text-2xl font-semibold text-gray-700 mb-4">Create New Task</h3>
+              
+              {/* Title Input */}
+              <input
+                type="text"
+                placeholder="Title"
+                value={newTask.title}
+                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                className="w-full px-4 py-2 mb-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              
+              {/* Notes Input */}
+              <textarea
+                placeholder="Notes"
+                value={newTask.notes}
+                onChange={(e) => setNewTask({ ...newTask, notes: e.target.value })}
+                className="w-full px-4 py-2 mb-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none h-24"
+              />
+
+              {/* Items Required Input */}
+              <input
+                type="text"
+                placeholder="Items Required (comma-separated)"
+                value={newTask.itemsRequired.join(', ')}
+                onChange={(e) =>
+                  setNewTask({ ...newTask, itemsRequired: e.target.value.split(',').map((item) => item.trim()) })
+                }
+                className="w-full px-4 py-2 mb-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Cost Input */}
+              <input
+                type="text"
+                placeholder="Cost"
+                value={newTask.cost}
+                onChange={(e) => setNewTask({ ...newTask, cost: e.target.value })}
+                className="w-full px-4 py-2 mb-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Category Input */}
+              <input
+                type="text"
+                placeholder="Category"
+                value={newTask.category}
+                onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Buttons */}
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => setShowCreateForm(false)}
+                  className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-600 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCreateTask}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700 transition"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
