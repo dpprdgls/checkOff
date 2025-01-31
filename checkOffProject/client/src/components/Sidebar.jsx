@@ -24,7 +24,7 @@ const Sidebar = ({ isHovered, setIsHovered }) => {
     >
       {/* Sidebar Header */}
       <div className="flex items-center justify-center text-white text-xl font-bold py-4">
-        {isHovered ? 'MyApp' : 'M'}
+        {isHovered ? 'CheckOff' : 'C'}
       </div>
 
       {/* Navigation Links */}
