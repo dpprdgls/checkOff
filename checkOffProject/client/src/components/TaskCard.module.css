@@ -3,12 +3,14 @@
 
 
 /* Center the task card container within the parent container */
-.taskCardContainer {
+
+
+/* .taskCardContainer {
   display: flex;
-  flex-wrap: wrap;            /* Allow cards to wrap to new rows */
-  justify-content: center;     /* Center cards horizontally */
-  gap: 20px;                   /* Space between cards */
-  max-width: 75%;            /* Set max width to avoid stretching */
+  flex-wrap: wrap;           
+  justify-content: center;     
+  gap: 20px;                 
+  max-width: 75%;       
   width: 1000px;
 }
 
@@ -24,7 +26,7 @@
   cursor: pointer;
   width: 90%;
   max-width: 300px;  
-  min-width: 200px;             /* Limit width for each card */
+  min-width: 200px;          
   transition: transform 0.3s ease;
   margin: 20px 20px 20px 20px; 
 }
@@ -53,4 +55,4 @@
   
   .taskCardExpanded .taskCardExpand {
     display: block;
-  }
+  } */
