@@ -40,7 +40,7 @@ exports.createProject = async (req, res) => {
     const savedProject = await newProject.save();
     res.status(201).json(savedProject);
   } catch (error) {
-    res.status(500).json({ message: 'Error creating project', error });
+    res.status(500).json({ message: 'Error creating project!', error });
   }
 };
 
