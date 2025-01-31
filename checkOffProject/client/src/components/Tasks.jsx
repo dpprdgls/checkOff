@@ -129,18 +129,33 @@ const Tasks = () => {
                   <>
                     {/* Task Card */}
                     <TaskCard task={task} />
-                    <button onClick={() => handleEditTask(task)}>Edit</button>
+
+                    {/* Edit Button */}
                     <button
-                      onMouseEnter={() => dispatch(setHoveredTask(task._id))}
+                      onMouseEnter={() => dispatch(setHoveredTask(`edit-${task._id}`))}
+                      onMouseLeave={() => dispatch(clearHoveredTask())}
+                      onClick={() => handleEditTask(task)}
+                      className={`flex items-center justify-center gap-4 w-full text-white py-3 px-4 rounded-md text-center ${
+                        hoveredTaskId === `edit-${task._id}` ? 'bg-gray-700' : 'bg-gray-500'
+                      }`}
+                    >
+                      
+                        {hoveredTaskId === `edit-${task._id}` ? 'Edit' : <span className="material-symbols-outlined">edit_note</span>}
+                    </button>
+
+                    
+                    {/* Delete Button */}
+                    <button
+                      onMouseEnter={() => dispatch(setHoveredTask(`delete-${task._id}`))}
                       onMouseLeave={() => dispatch(clearHoveredTask())}
                       onClick={() => handleDeleteTask(task._id)}
                       className={`flex items-center justify-center gap-4 w-full text-white py-3 px-4 rounded-md text-center ${
-                        hoveredTaskId === task._id ? 'bg-red-500 hover:bg-red-700' : 'bg-gray-500'
+                        hoveredTaskId === `delete-${task._id}` ? 'bg-red-500 hover:bg-red-700' : 'bg-gray-500'
                       }`}
                     >
-                      <span className="material-icons-outlined text-lg">delete</span>
-                      {hoveredTaskId === task._id && <span className="text-sm font-medium">Delete</span>}
-                    </button>
+                      
+                      {hoveredTaskId === `delete-${task._id}` ? 'Delete' : <span className="material-icons-outlined">delete</span>}
+                      </button>
                   </>
                 )}
               </div>
