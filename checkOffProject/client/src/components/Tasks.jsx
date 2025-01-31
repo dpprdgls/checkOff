@@ -161,7 +161,17 @@ const Tasks = () => {
               </div>
             ))}
             <div className="createTaskWrapper">
-              <button onClick={() => setShowCreateForm(true)}>Create New Task</button>
+              {/* Floating "Create Task" Button */}
+              <button
+                onMouseEnter={() => dispatch(setHoveredTask('create-task'))}
+                onMouseLeave={() => dispatch(clearHoveredTask())}
+                onClick={() => setShowCreateForm(true)}
+                className={`fixed bottom-6 right-6 flex items-center justify-center gap-4 p-6 rounded-full shadow-lg transition-all ${
+                  hoveredTaskId === 'create-task' ? 'bg-blue-600 hover:bg-blue-800 w-48' : 'bg-blue-500 w-16'
+                } text-white`}
+              >
+                {hoveredTaskId === 'create-task' ? 'Create Task' : <span className="material-symbols-outlined text-3xl">new_window</span>}
+              </button>
             </div>
           </div>
         )}
