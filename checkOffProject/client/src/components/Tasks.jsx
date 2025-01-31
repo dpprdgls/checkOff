@@ -7,15 +7,9 @@ import '../styles/tailwind.css';
 const Tasks = () => {
   const dispatch = useDispatch();
   const { tasks = [], loading, error } = useSelector((state) => state.tasks);
-  
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [newTask, setNewTask] = useState({
-    title: '',
-    notes: '',
-    itemsRequired: [''],
-    cost: '',
-    category: '',
-  });
+
+  const [editMode, setEditMode] = useState(null); // Track task being edited
+  const [editTask, setEditTask] = useState({ title: '', notes: '' });
 
   useEffect(() => {
     dispatch(fetchTasks());
@@ -23,17 +17,26 @@ const Tasks = () => {
 
   const handleCreateTask = async () => {
     try {
-      await dispatch(createTask(newTask));
-      setShowCreateForm(false);
-      setNewTask({ title: '', notes: '', itemsRequired: [''], cost: '', category: '' });
+      await dispatch(createTask(editTask));
+      setEditMode(null);
+      setEditTask({ title: '', notes: '' });
     } catch (error) {
       console.error('Error creating task:', error);
     }
   };
 
   const handleEditTask = (task) => {
-    setShowCreateForm(true);
-    setNewTask(task);
+    setEditMode(task._id); // Track which task is in edit mode
+    setEditTask({ ...task }); // Copy task data to state
+  };
+
+  const handleSaveEdit = async () => {
+    try {
+      await dispatch(updateTask(editMode, editTask));
+      setEditMode(null); // Exit edit mode
+    } catch (error) {
+      console.error('Error updating task:', error);
+    }
   };
 
   const handleDeleteTask = async (taskId) => {
@@ -59,7 +62,11 @@ const Tasks = () => {
             <TaskCard
               key={task._id}
               task={task}
+              editMode={editMode}
+              editTask={editTask}
+              setEditTask={setEditTask}
               handleEditTask={handleEditTask}
+              handleSaveEdit={handleSaveEdit}
               handleDeleteTask={handleDeleteTask}
             />
           ))}
@@ -68,7 +75,7 @@ const Tasks = () => {
 
       {/* Floating "Create Task" Button */}
       <button
-        onClick={() => setShowCreateForm(true)}
+        onClick={() => setEditMode('new')}
         className="fixed bottom-6 right-6 flex items-center justify-center gap-4 p-6 rounded-full shadow-lg transition-all 
         bg-blue-500 hover:bg-blue-700 text-white w-16 h-16"
       >
