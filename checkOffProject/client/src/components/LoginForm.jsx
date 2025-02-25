@@ -16,7 +16,7 @@ const LoginForm = () => {
       const userId = await dispatch(loginUser(credentials.email, credentials.password));
 
       // Redirect the user to the tasks page using user ID
-      navigate(`/login/${userId}/tasks`);
+      navigate(`/tasks`);
     } catch (err) {
       setError(err.message);
       console.error('Login error:', err);
